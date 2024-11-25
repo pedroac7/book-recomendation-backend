@@ -2,6 +2,7 @@ package com.imd.br.bookRecomendation.Model;
 
 import jakarta.persistence.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -24,11 +25,8 @@ public class Usuario {
             inverseJoinColumns = @JoinColumn(name = "livro_id"))
     private List<Livro> livrosFavoritos;
 
-    @ManyToMany
-    @JoinTable(name = "usuario_historico_leitura",
-            joinColumns = @JoinColumn(name = "usuario_id"),
-            inverseJoinColumns = @JoinColumn(name = "livro_id"))
-    private List<Livro> historicoLeitura;
+    @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL)
+    private List<Historico> historicoLeitura;
 
     @ManyToMany
     @JoinTable(name = "usuario_livros_desejados",
@@ -86,11 +84,11 @@ public class Usuario {
         this.livrosDesejados = livrosDesejados;
     }
 
-    public List<Livro> getHistoricoLeitura() {
+    public List<Historico> getHistoricoLeitura() {
         return historicoLeitura;
     }
 
-    public void setHistoricoLeitura(List<Livro> historicoLeitura) {
+    public void setHistoricoLeitura(List<Historico> historicoLeitura) {
         this.historicoLeitura = historicoLeitura;
     }
 
