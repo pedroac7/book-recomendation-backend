@@ -22,6 +22,14 @@ public class LivroController {
     @Autowired
     private ImportadorLivros il;
 
+    @GetMapping("/filtro")
+    public List<Livro> filtrarLivros(@RequestParam(required = false) String titulo,
+            @RequestParam(required = false) String autor,
+            @RequestParam(required = false) String genero,
+            @RequestParam(required = false) Double avaliacaoMediaMin) {
+        return ls.filtrarLivros(titulo, autor, genero, avaliacaoMediaMin);
+    }
+
     @GetMapping
     public List<Livro> listarTodos() {
         return ls.listarTodos();
