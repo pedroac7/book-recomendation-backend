@@ -18,9 +18,8 @@ public class ListaDeLeitura {
     @JoinTable(name = "lista_livro", joinColumns = @JoinColumn(name = "lista_id"), inverseJoinColumns = @JoinColumn(name = "livro_id"))
     private Set<Livro> livros = new HashSet<>();
 
-    @ManyToOne
-    @JoinColumn(name = "usuario_id")
-    private Usuario usuario;
+    public ListaDeLeitura() {
+    }
 
     // Getters e Setters
 
