@@ -13,5 +13,4 @@ public class BookRecomendationApplication {
 		SpringApplication.run(BookRecomendationApplication.class, args);
 	}
 
-
 }
