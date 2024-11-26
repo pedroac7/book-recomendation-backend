@@ -2,6 +2,8 @@ package com.imd.br.bookRecomendation.Model;
 
 import jakarta.persistence.*;
 import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 public class Livro {
@@ -23,6 +25,9 @@ public class Livro {
 
     @OneToMany(mappedBy = "livro", cascade = CascadeType.ALL)
     private List<Feedback> feedbacks;
+
+    @ManyToMany(mappedBy = "livros")
+    private Set<ListaDeLeitura> listasDeLeitura = new HashSet<>();
 
     // Getters e Setters
 
