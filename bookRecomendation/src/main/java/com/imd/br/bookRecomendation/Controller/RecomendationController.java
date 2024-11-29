@@ -36,10 +36,10 @@ public class RecomendationController {
                 .content();
     }
 
-    @GetMapping("/genero/{id}")
-    public String recomendationByGenero(@PathVariable Long id) {
+    @GetMapping("/genero/{usuarioId}")
+    public String recomendationByGenero(@PathVariable Long usuarioId) {
 
-        String message = rs.getMessageByGenero(id);
+        String message = rs.getMessageByGenero(usuarioId);
         return this.chatClient.prompt()
                 .system(system)
                 .user(message)
@@ -47,10 +47,10 @@ public class RecomendationController {
                 .content();
     }
 
-    @GetMapping("/livro/{id}")
-    public String recomendationByLivro(@PathVariable Long id){
+    @GetMapping("/livro/{usuarioId}")
+    public String recomendationByLivro(@PathVariable Long usuarioId){
 
-        String message = rs.getMessageByUltimoLivro(id);
+        String message = rs.getMessageByUltimoLivro(usuarioId);
         return this.chatClient.prompt()
                 .system(system)
                 .user(message)
