@@ -1,15 +1,11 @@
 package com.imd.br.bookRecomendation.Controller;
 
 import com.imd.br.bookRecomendation.Model.Livro;
-import com.imd.br.bookRecomendation.Model.Usuario;
-import com.imd.br.bookRecomendation.Repository.UsuarioRepository;
 import com.imd.br.bookRecomendation.Service.RecomendationService;
 import org.springframework.ai.chat.client.ChatClient;
 import org.springframework.ai.chat.prompt.ChatOptionsBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/recomendation")
@@ -19,6 +15,8 @@ public class RecomendationController {
 
     @Autowired
     private RecomendationService rs;
+
+    private String system = "Responda de forma curta, clara e objetiva, você é um recomendador de livros";
 
     public RecomendationController(ChatClient.Builder chatClientBuilder) {
         this.chatClient = chatClientBuilder
@@ -31,7 +29,6 @@ public class RecomendationController {
 
     @GetMapping
     public String recomendation(String message) {
-        String system = "Responda de forma curta, clara e objetiva, você é um recomendador de livros";
         return this.chatClient.prompt()
                 .system(system)
                 .user(message)
@@ -41,11 +38,8 @@ public class RecomendationController {
 
     @GetMapping("/genero/{id}")
     public String recomendationByGenero(@PathVariable Long id) {
-        String system = "Responda de forma curta, clara e objetiva, você é um recomendador de livros";
 
-        String genero = rs.getGeneroById(id);
-
-        String message = "Recomende livros do mesmo genero preferido do usuario: " + genero;
+        String message = rs.getMessageByGenero(id);
         return this.chatClient.prompt()
                 .system(system)
                 .user(message)
@@ -55,11 +49,8 @@ public class RecomendationController {
 
     @GetMapping("/livro/{id}")
     public String recomendationByLivro(@PathVariable Long id){
-        String system = "Responda de forma curta, clara e objetiva, você é um recomendador de livros";
 
-        Livro livro = rs.getUltimoLivro(id);
-
-        String message = "Recomende livros semelhantes ao ultimo livro lido pelo usuario: " + livro.getTitulo();
+        String message = rs.getMessageByUltimoLivro(id);
         return this.chatClient.prompt()
                 .system(system)
                 .user(message)

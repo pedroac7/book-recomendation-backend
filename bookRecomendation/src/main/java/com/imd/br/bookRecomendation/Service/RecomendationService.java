@@ -19,7 +19,7 @@ public class RecomendationService {
     @Autowired
     private HistoricoService hs;
 
-    public String getGeneroById(Long id){
+    public String getMessageByGenero(Long id){
         Optional<Usuario> usuario = ur.findById(id);
 
         String genero = usuario.get().getGeneroPreferido();
@@ -28,16 +28,22 @@ public class RecomendationService {
             genero = "Drama";
         }
 
-        return genero;
+        String message = "Recomende livros do mesmo genero preferido do usuario: " + genero;
+
+        return message;
     }
 
-    public Livro getUltimoLivro(Long id){
+    public String getMessageByUltimoLivro(Long id){
 
         List<Historico> historico = hs.buscarPorUsuario(id);
 
         int tam = historico.size();
 
-        return historico.get(tam-1).getLivro();
+        Livro livro = historico.get(tam-1).getLivro();
+
+        String message = "Recomende livros semelhantes ao ultimo livro lido pelo usuario: " + livro.getTitulo();
+
+        return message;
     }
 
 }
