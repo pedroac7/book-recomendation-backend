@@ -6,6 +6,9 @@ Docs:
 https://developers.mercadolivre.com.br/pt_br/itens-e-buscas
 https://api.mercadolibre.com/sites/MLB/categories
 """
+
+MARKETPLACE_ID = 2
+
 def buscar_preco_livros_mercado_livre(nome):
     base_url = "https://api.mercadolibre.com/sites/MLB/search"
 
@@ -38,27 +41,27 @@ def buscar_preco_livros_mercado_livre(nome):
 
 def get_all_books():
     query = """
-    SELECT livro.titulo, livro.autor, livro.editora, marketplace_book.id, livro.id FROM livro 
-    LEFT JOIN marketplace_book ON livro.id = marketplace_book.livro_id
+    SELECT livro.titulo, livro.autor, livro.editora, marketplace_product.id, livro.id FROM livro 
+    LEFT JOIN marketplace_product ON livro.id = marketplace_product.livro_id
     """
     cursor.execute(query)
     return cursor.fetchall()
 
-def atualizar_marketplace_book(livro_id, price, marketplace, url, image_url, title):
+def atualizar_marketplace_product(livro_id, price, marketplace_id, url, image_url, title):
     query = """
-    UPDATE marketplace_book 
-    SET price = %s, marketplace = %s, url = %s, image_url = %s, title = %s
+    UPDATE marketplace_product 
+    SET price = %s, marketplace_id = %s, url = %s, image_url = %s, title = %s
     WHERE livro_id = %s
     """
-    cursor.execute(query, (price, marketplace, url, image_url, title, livro_id))
+    cursor.execute(query, (price, marketplace_id, url, image_url, title, livro_id))
     db_connection.commit()
 
-def criar_marketplace_book(livro_id, price, marketplace, url, image_url, title):
+def criar_marketplace_product(livro_id, price, marketplace_id, url, image_url, title):
     query = """
-    INSERT INTO marketplace_book (price, marketplace, url, image_url, title, livro_id)
+    INSERT INTO marketplace_product (price, marketplace_id, url, image_url, title, livro_id)
     VALUES (%s, %s, %s, %s, %s, %s)
     """
-    cursor.execute(query, (price, marketplace, url, image_url, title, livro_id))
+    cursor.execute(query, (price, marketplace_id, url, image_url, title, livro_id))
     db_connection.commit()
 
 
@@ -78,30 +81,30 @@ for livro in livros:
     titulo = livro[0]
     autor = livro[1]
     editora = livro[2]
-    marketplace_id = livro[3]
+    marketplace_product_id = livro[3]
     id = livro[4]
 
     resultado = buscar_preco_livros_mercado_livre(f"{titulo} - {autor} - {editora}")
-    if marketplace_id:
-        atualizar_marketplace_book(
+    if marketplace_product_id:
+        atualizar_marketplace_product(
             livro_id=id,
             price=resultado['price'],
-            marketplace=1,
+            marketplace_id=MARKETPLACE_ID,
             url=resultado['url'],
             image_url=resultado['image_url'],
             title=resultado['title']
         )
         updated_books += 1
     else:
-        criar_marketplace_book(
+        criar_marketplace_product(
             livro_id=id,
             price=resultado['price'],
-            marketplace=1,
+            marketplace_id=MARKETPLACE_ID,
             url=resultado['url'],
             image_url=resultado['image_url'],
             title=resultado['title']
         )
         created_books += 1
 
-print(f"{created_books} MarketplaceBooks criados.")
-print(f"{updated_books} MarketplaceBooks atualizados.")
+print(f"{created_books} marketplace_product criados.")
+print(f"{updated_books} marketplace_product atualizados.")
