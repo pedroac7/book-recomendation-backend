@@ -2,16 +2,18 @@ package com.imd.br.bookRecomendation.Model;
 
 import jakarta.persistence.*;
 
-import com.imd.br.bookRecomendation.Enum.Marketplace;
-
 @Entity
-public class MarketplaceBook {
+public class MarketplaceProduct {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     private Float price;
+    @ManyToOne
     private Marketplace marketplace;
+
+    @Lob
+    @Column(length = 2083)
     private String url;
     private String imageUrl;
     private String title;
