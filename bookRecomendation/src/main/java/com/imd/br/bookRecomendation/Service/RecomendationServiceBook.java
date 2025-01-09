@@ -1,7 +1,7 @@
 package com.imd.br.bookRecomendation.Service;
 
 import com.imd.br.bookRecomendation.Model.Historico;
-import com.imd.br.bookRecomendation.Model.Livro;
+import com.imd.br.bookRecomendation.Model.Produto;
 import com.imd.br.bookRecomendation.Model.Usuario;
 import com.imd.br.bookRecomendation.Repository.UsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,29 +19,29 @@ public class RecomendationServiceBook extends RecomendationService {
     @Autowired
     private HistoricoService hs;
 
-    public String getMessageByGenero(Long id){
+    public String getMessageByGenero(Long id) {
         Optional<Usuario> usuario = ur.findById(id);
 
         String genero = usuario.get().getGeneroPreferido();
 
-        if (genero.isEmpty()){
+        if (genero.isEmpty()) {
             genero = "Drama";
         }
 
-        String message = "Recomende livros do mesmo genero preferido do usuario: " + genero;
+        String message = "Recomende produtos do mesmo genero preferido do usuario: " + genero;
 
         return message;
     }
 
-    public String getMessageByUltimoLivro(Long id){
+    public String getMessageByUltimoProduto(Long id) {
 
         List<Historico> historico = hs.buscarPorUsuario(id);
 
         int tam = historico.size();
 
-        Livro livro = historico.get(tam-1).getLivro();
+        Produto produto = historico.get(tam - 1).getProduto();
 
-        String message = "Recomende livros semelhantes ao ultimo livro lido pelo usuario: " + livro.getTitulo();
+        String message = "Recomende produtos semelhantes ao ultimo produto lido pelo usuario: " + produto.getTitulo();
 
         return message;
     }

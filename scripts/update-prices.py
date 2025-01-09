@@ -9,13 +9,13 @@ https://api.mercadolibre.com/sites/MLB/categories
 
 MARKETPLACE_ID = 2
 
-def buscar_preco_livros_mercado_livre(nome):
+def buscar_preco_produtos_mercado_livre(nome):
     base_url = "https://api.mercadolibre.com/sites/MLB/search"
 
     try:
         response = requests.get(base_url, params={
             "q": nome, 
-            "category" : "MLB1196", #"Livros, Revistas e Comics"
+            "category" : "MLB1196", #"Produtos, Revistas e Comics"
             "limit": 1,
             # "sort": "price_asc",
             # "power_seller": "yes",
@@ -41,27 +41,27 @@ def buscar_preco_livros_mercado_livre(nome):
 
 def get_all_books():
     query = """
-    SELECT livro.titulo, livro.autor, livro.editora, marketplace_product.id, livro.id FROM livro 
-    LEFT JOIN marketplace_product ON livro.id = marketplace_product.livro_id
+    SELECT produto.titulo, produto.autor, produto.editora, marketplace_product.id, produto.id FROM produto 
+    LEFT JOIN marketplace_product ON produto.id = marketplace_product.produto_id
     """
     cursor.execute(query)
     return cursor.fetchall()
 
-def atualizar_marketplace_product(livro_id, price, marketplace_id, url, image_url, title):
+def atualizar_marketplace_product(produto_id, price, marketplace_id, url, image_url, title):
     query = """
     UPDATE marketplace_product 
     SET price = %s, marketplace_id = %s, url = %s, image_url = %s, title = %s
-    WHERE livro_id = %s
+    WHERE produto_id = %s
     """
-    cursor.execute(query, (price, marketplace_id, url, image_url, title, livro_id))
+    cursor.execute(query, (price, marketplace_id, url, image_url, title, produto_id))
     db_connection.commit()
 
-def criar_marketplace_product(livro_id, price, marketplace_id, url, image_url, title):
+def criar_marketplace_product(produto_id, price, marketplace_id, url, image_url, title):
     query = """
-    INSERT INTO marketplace_product (price, marketplace_id, url, image_url, title, livro_id)
+    INSERT INTO marketplace_product (price, marketplace_id, url, image_url, title, produto_id)
     VALUES (%s, %s, %s, %s, %s, %s)
     """
-    cursor.execute(query, (price, marketplace_id, url, image_url, title, livro_id))
+    cursor.execute(query, (price, marketplace_id, url, image_url, title, produto_id))
     db_connection.commit()
 
 
@@ -76,18 +76,18 @@ cursor = db_connection.cursor()
 created_books = 0
 updated_books = 0
 
-livros = get_all_books()
-for livro in livros:
-    titulo = livro[0]
-    autor = livro[1]
-    editora = livro[2]
-    marketplace_product_id = livro[3]
-    id = livro[4]
+produtos = get_all_books()
+for produto in produtos:
+    titulo = produto[0]
+    autor = produto[1]
+    editora = produto[2]
+    marketplace_product_id = produto[3]
+    id = produto[4]
 
-    resultado = buscar_preco_livros_mercado_livre(f"{titulo} - {autor} - {editora}")
+    resultado = buscar_preco_produtos_mercado_livre(f"{titulo} - {autor} - {editora}")
     if marketplace_product_id:
         atualizar_marketplace_product(
-            livro_id=id,
+            produto_id=id,
             price=resultado['price'],
             marketplace_id=MARKETPLACE_ID,
             url=resultado['url'],
@@ -97,7 +97,7 @@ for livro in livros:
         updated_books += 1
     else:
         criar_marketplace_product(
-            livro_id=id,
+            produto_id=id,
             price=resultado['price'],
             marketplace_id=MARKETPLACE_ID,
             url=resultado['url'],

@@ -15,9 +15,9 @@ public class Feedback {
     private Usuario usuario;
 
     @ManyToOne
-    @JoinColumn(name = "livro_id")
+    @JoinColumn(name = "produto_id")
     @JsonIgnore
-    private Livro livro;
+    private Produto produto;
 
     private int nota;
     private String comentario;
@@ -25,9 +25,9 @@ public class Feedback {
     public Feedback() {
     }
 
-    public Feedback(Usuario usuario, Livro livro, int nota, String comentario) {
+    public Feedback(Usuario usuario, Produto produto, int nota, String comentario) {
         this.usuario = usuario;
-        this.livro = livro;
+        this.produto = produto;
         this.nota = nota;
         this.comentario = comentario;
     }
@@ -50,12 +50,12 @@ public class Feedback {
         this.usuario = usuario;
     }
 
-    public Livro getLivro() {
-        return livro;
+    public Produto getProduto() {
+        return produto;
     }
 
-    public void setLivro(Livro livro) {
-        this.livro = livro;
+    public void setProduto(Produto produto) {
+        this.produto = produto;
     }
 
     public int getNota() {

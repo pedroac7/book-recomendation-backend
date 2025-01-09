@@ -17,8 +17,8 @@ public class HistoricoController {
 
     @PostMapping("/adicionar")
     public ResponseEntity<Historico> adicionarAoHistorico(
-            @RequestParam Long usuarioId, @RequestParam Long livroId) {
-        Historico historico = hs.adicionar(usuarioId, livroId);
+            @RequestParam Long usuarioId, @RequestParam Long produtoId) {
+        Historico historico = hs.adicionar(usuarioId, produtoId);
         return ResponseEntity.ok(historico);
     }
 

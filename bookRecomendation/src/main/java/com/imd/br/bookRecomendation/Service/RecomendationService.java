@@ -4,5 +4,5 @@ public abstract class RecomendationService {
 
     public abstract String getMessageByGenero(Long id);
 
-    public abstract String getMessageByUltimoLivro(Long id);
+    public abstract String getMessageByUltimoProduto(Long id);
 }

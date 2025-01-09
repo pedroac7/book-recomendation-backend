@@ -16,7 +16,7 @@ public class RecomendationController {
     @Autowired
     private RecomendationServiceBook rs;
 
-    private String system = "Responda de forma curta, clara e objetiva, você é um recomendador de livros";
+    private String system = "Responda de forma curta, clara e objetiva, você é um recomendador de produtos";
 
     public RecomendationController(ChatClient.Builder chatClientBuilder) {
         this.chatClient = chatClientBuilder
@@ -47,10 +47,10 @@ public class RecomendationController {
                 .content();
     }
 
-    @GetMapping("/livro/{usuarioId}")
-    public String recomendationByLivro(@PathVariable Long usuarioId){
+    @GetMapping("/produto/{usuarioId}")
+    public String recomendationByProduto(@PathVariable Long usuarioId) {
 
-        String message = rs.getMessageByUltimoLivro(usuarioId);
+        String message = rs.getMessageByUltimoProduto(usuarioId);
         return this.chatClient.prompt()
                 .system(system)
                 .user(message)

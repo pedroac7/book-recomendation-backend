@@ -7,6 +7,6 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface HistoricoLeituraRepository extends JpaRepository<Historico, Long> {
+public interface HistoricoProdutosRepository extends JpaRepository<Historico, Long> {
     List<Historico> findByUsuarioId(Long usuarioId);
 }

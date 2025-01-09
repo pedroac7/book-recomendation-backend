@@ -17,17 +17,18 @@ public class Historico {
     private Usuario usuario;
 
     @ManyToOne
-    @JoinColumn(name = "livro_id")
+    @JoinColumn(name = "produto_id")
     @JsonIgnore
-    private Livro livro;
+    private Produto produto;
 
-    public Historico(Long id, Usuario usuario, Livro livro) {
+    public Historico(Long id, Usuario usuario, Produto produto) {
         this.id = id;
         this.usuario = usuario;
-        this.livro = livro;
+        this.produto = produto;
     }
 
-    public Historico(){}
+    public Historico() {
+    }
 
     public Long getId() {
         return id;
@@ -45,11 +46,11 @@ public class Historico {
         this.usuario = usuario;
     }
 
-    public Livro getLivro() {
-        return livro;
+    public Produto getProduto() {
+        return produto;
     }
 
-    public void setLivro(Livro livro) {
-        this.livro = livro;
+    public void setProduto(Produto produto) {
+        this.produto = produto;
     }
 }

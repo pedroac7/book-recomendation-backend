@@ -27,9 +27,9 @@ public class FeedbackController {
     }
 
     @PostMapping
-    public Feedback salvar(@RequestParam Long usuarioId, @RequestParam Long livroId,
-                           @RequestParam int nota, @RequestParam String comentario) {
-        return fs.salvar(usuarioId, livroId, nota, comentario);
+    public Feedback salvar(@RequestParam Long usuarioId, @RequestParam Long produtoId,
+            @RequestParam int nota, @RequestParam String comentario) {
+        return fs.salvar(usuarioId, produtoId, nota, comentario);
     }
 
     @PutMapping("/{id}")
@@ -41,6 +41,5 @@ public class FeedbackController {
     public void deletar(@PathVariable Long id) {
         fs.deletar(id);
     }
-
 
 }
