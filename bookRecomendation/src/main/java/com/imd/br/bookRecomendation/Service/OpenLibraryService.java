@@ -14,7 +14,7 @@ public class OpenLibraryService {
                 .build();
     }
 
-    public String buscarLivros(String query, int page) {
+    public String buscarProdutos(String query, int page) {
         return webClient.get()
                 .uri(uriBuilder -> uriBuilder
                         .path("/search.json")

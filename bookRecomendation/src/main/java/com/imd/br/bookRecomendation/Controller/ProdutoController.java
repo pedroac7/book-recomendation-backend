@@ -1,8 +1,8 @@
 package com.imd.br.bookRecomendation.Controller;
 
-import com.imd.br.bookRecomendation.Api.ImportadorLivros;
-import com.imd.br.bookRecomendation.Model.Livro;
-import com.imd.br.bookRecomendation.Service.LivroService;
+import com.imd.br.bookRecomendation.Api.ImportadorProdutos;
+import com.imd.br.bookRecomendation.Model.Produto;
+import com.imd.br.bookRecomendation.Service.ProdutoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -14,40 +14,40 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/livros")
-public class LivroController {
+@RequestMapping("/produtos")
+public class ProdutoController {
 
     @Autowired
-    private LivroService ls;
+    private ProdutoService ls;
     @Autowired
-    private ImportadorLivros il;
+    private ImportadorProdutos il;
 
     @GetMapping("/filtro")
-    public List<Livro> filtrarLivros(@RequestParam(required = false) String titulo,
+    public List<Produto> filtrarProdutos(@RequestParam(required = false) String titulo,
             @RequestParam(required = false) String autor,
             @RequestParam(required = false) String genero,
             @RequestParam(required = false) Double avaliacaoMediaMin) {
-        return ls.filtrarLivros(titulo, autor, genero, avaliacaoMediaMin);
+        return ls.filtrarProdutos(titulo, autor, genero, avaliacaoMediaMin);
     }
 
     @GetMapping
-    public List<Livro> listarTodos() {
+    public List<Produto> listarTodos() {
         return ls.listarTodos();
     }
 
     @GetMapping("/{id}")
-    public Optional<Livro> buscarPorId(@PathVariable Long id) {
+    public Optional<Produto> buscarPorId(@PathVariable Long id) {
         return ls.buscarPorId(id);
     }
 
     @PostMapping
-    public Livro salvar(@RequestBody Livro livro) {
-        return ls.salvar(livro);
+    public Produto salvar(@RequestBody Produto produto) {
+        return ls.salvar(produto);
     }
 
     @PutMapping("/{id}")
-    public Livro atualizar(@PathVariable Long id, @RequestBody Livro livroAtualizado) {
-        return ls.atualizar(id, livroAtualizado);
+    public Produto atualizar(@PathVariable Long id, @RequestBody Produto produtoAtualizado) {
+        return ls.atualizar(id, produtoAtualizado);
     }
 
     @DeleteMapping("/{id}")
@@ -56,8 +56,8 @@ public class LivroController {
     }
 
     @PostMapping("/importar")
-    public ResponseEntity<String> importarLivros() {
-        il.importarLivros("books");
-        return ResponseEntity.ok("Importação de livros iniciada!");
+    public ResponseEntity<String> importarProdutos() {
+        il.importarProdutos("books");
+        return ResponseEntity.ok("Importação de produtos iniciada!");
     }
 }

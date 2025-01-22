@@ -2,7 +2,6 @@ package com.imd.br.bookRecomendation.Model;
 
 import jakarta.persistence.*;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -20,19 +19,15 @@ public class Usuario {
     private String generoPreferido;
 
     @ManyToMany
-    @JoinTable(name = "usuario_livros_favoritos",
-            joinColumns = @JoinColumn(name = "usuario_id"),
-            inverseJoinColumns = @JoinColumn(name = "livro_id"))
-    private List<Livro> livrosFavoritos;
+    @JoinTable(name = "usuario_produtos_favoritos", joinColumns = @JoinColumn(name = "usuario_id"), inverseJoinColumns = @JoinColumn(name = "produto_id"))
+    private List<Produto> produtosFavoritos;
 
     @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL)
-    private List<Historico> historicoLeitura;
+    private List<Historico> historicoProdutos;
 
     @ManyToMany
-    @JoinTable(name = "usuario_livros_desejados",
-            joinColumns = @JoinColumn(name = "usuario_id"),
-            inverseJoinColumns = @JoinColumn(name = "livro_id"))
-    private List<Livro> livrosDesejados;
+    @JoinTable(name = "usuario_produtos_desejados", joinColumns = @JoinColumn(name = "usuario_id"), inverseJoinColumns = @JoinColumn(name = "produto_id"))
+    private List<Produto> produtosDesejados;
 
     // Getters e Setters
 
@@ -68,28 +63,28 @@ public class Usuario {
         this.senha = senha;
     }
 
-    public List<Livro> getLivrosFavoritos() {
-        return livrosFavoritos;
+    public List<Produto> getProdutosFavoritos() {
+        return produtosFavoritos;
     }
 
-    public void setLivrosFavoritos(List<Livro> livrosFavoritos) {
-        this.livrosFavoritos = livrosFavoritos;
+    public void setProdutosFavoritos(List<Produto> produtosFavoritos) {
+        this.produtosFavoritos = produtosFavoritos;
     }
 
-    public List<Livro> getLivrosDesejados() {
-        return livrosDesejados;
+    public List<Produto> getProdutosDesejados() {
+        return produtosDesejados;
     }
 
-    public void setLivrosDesejados(List<Livro> livrosDesejados) {
-        this.livrosDesejados = livrosDesejados;
+    public void setProdutosDesejados(List<Produto> produtosDesejados) {
+        this.produtosDesejados = produtosDesejados;
     }
 
-    public List<Historico> getHistoricoLeitura() {
-        return historicoLeitura;
+    public List<Historico> getHistoricoProdutos() {
+        return historicoProdutos;
     }
 
-    public void setHistoricoLeitura(List<Historico> historicoLeitura) {
-        this.historicoLeitura = historicoLeitura;
+    public void setHistoricoProdutos(List<Historico> historicoProdutos) {
+        this.historicoProdutos = historicoProdutos;
     }
 
     public String getGeneroPreferido() {

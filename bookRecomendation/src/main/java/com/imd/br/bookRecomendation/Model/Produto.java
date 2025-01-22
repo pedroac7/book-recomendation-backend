@@ -6,15 +6,11 @@ import java.util.HashSet;
 import java.util.Set;
 
 @Entity
-public class Livro {
+public class Produto {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
     private String titulo;
-    private String autor;
-    private String editora;
-    private int numeroPaginas;
     private String genero;
     private String linkImage;
 
@@ -23,14 +19,13 @@ public class Livro {
 
     private double avaliacaoMedia = 0.0;
 
-    @OneToMany(mappedBy = "livro", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "produto", cascade = CascadeType.ALL)
     private List<Feedback> feedbacks;
 
-    @ManyToMany(mappedBy = "livros")
-    private Set<ListaDeLeitura> listasDeLeitura = new HashSet<>();
+    @ManyToMany(mappedBy = "produtos")
+    private Set<ListaDeProdutos> listasDeProdutos = new HashSet<>();
 
     // Getters e Setters
-
     public Long getId() {
         return id;
     }
@@ -45,30 +40,6 @@ public class Livro {
 
     public void setTitulo(String titulo) {
         this.titulo = titulo;
-    }
-
-    public String getAutor() {
-        return autor;
-    }
-
-    public void setAutor(String autor) {
-        this.autor = autor;
-    }
-
-    public String getEditora() {
-        return editora;
-    }
-
-    public void setEditora(String editora) {
-        this.editora = editora;
-    }
-
-    public int getNumeroPaginas() {
-        return numeroPaginas;
-    }
-
-    public void setNumeroPaginas(int numeroPaginas) {
-        this.numeroPaginas = numeroPaginas;
     }
 
     public String getGenero() {

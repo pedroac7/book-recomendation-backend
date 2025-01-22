@@ -1,10 +1,10 @@
 package com.imd.br.bookRecomendation.Service;
 
 import com.imd.br.bookRecomendation.Model.Feedback;
-import com.imd.br.bookRecomendation.Model.Livro;
+import com.imd.br.bookRecomendation.Model.Produto;
 import com.imd.br.bookRecomendation.Model.Usuario;
 import com.imd.br.bookRecomendation.Repository.FeedbackRepository;
-import com.imd.br.bookRecomendation.Repository.LivroRepository;
+import com.imd.br.bookRecomendation.Repository.ProdutoRepository;
 import com.imd.br.bookRecomendation.Repository.UsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -22,7 +22,7 @@ public class FeedbackService {
     private UsuarioRepository ur;
 
     @Autowired
-    private LivroRepository lr;
+    private ProdutoRepository lr;
 
     public List<Feedback> listarTodos() {
         return fr.findAll();
@@ -32,13 +32,13 @@ public class FeedbackService {
         return fr.findById(id);
     }
 
-    public Feedback salvar(Long usuarioId, Long livroId, int nota, String comentario) {
+    public Feedback salvar(Long usuarioId, Long produtoId, int nota, String comentario) {
         Usuario usuario = ur.findById(usuarioId)
                 .orElseThrow(() -> new RuntimeException("Usuário não encontrado"));
-        Livro livro = lr.findById(livroId)
-                .orElseThrow(() -> new RuntimeException("Livro não encontrado"));
+        Produto produto = lr.findById(produtoId)
+                .orElseThrow(() -> new RuntimeException("Produto não encontrado"));
 
-        Feedback feedback = new Feedback(usuario, livro, nota, comentario);
+        Feedback feedback = new Feedback(usuario, produto, nota, comentario);
         return fr.save(feedback);
     }
 

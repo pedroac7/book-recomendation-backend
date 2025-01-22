@@ -19,7 +19,7 @@ public class MarketplaceProduct {
     private String title;
 
     @ManyToOne
-    private Livro livro;
+    private Produto produto;
 
     public Long getId() {
         return id;
@@ -65,11 +65,11 @@ public class MarketplaceProduct {
         this.title = title;
     }
 
-    public Livro getLivro() {
-        return livro;
+    public Produto getProduto() {
+        return produto;
     }
 
-    public void setLivro(Livro livro) {
-        this.livro = livro;
+    public void setProduto(Produto produto) {
+        this.produto = produto;
     }
 }

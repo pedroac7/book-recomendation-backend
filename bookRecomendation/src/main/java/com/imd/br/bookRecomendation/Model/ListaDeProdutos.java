@@ -6,7 +6,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 @Entity
-public class ListaDeLeitura {
+public class ListaDeProdutos {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -15,10 +15,10 @@ public class ListaDeLeitura {
     private String descricao;
 
     @ManyToMany
-    @JoinTable(name = "lista_livro", joinColumns = @JoinColumn(name = "lista_id"), inverseJoinColumns = @JoinColumn(name = "livro_id"))
-    private Set<Livro> livros = new HashSet<>();
+    @JoinTable(name = "lista_produto", joinColumns = @JoinColumn(name = "lista_id"), inverseJoinColumns = @JoinColumn(name = "produto_id"))
+    private Set<Produto> produtos = new HashSet<>();
 
-    public ListaDeLeitura() {
+    public ListaDeProdutos() {
     }
 
     // Getters e Setters
@@ -47,11 +47,11 @@ public class ListaDeLeitura {
         this.descricao = descricao;
     }
 
-    public Set<Livro> getLivros() {
-        return livros;
+    public Set<Produto> getProdutos() {
+        return produtos;
     }
 
-    public void setLivros(Set<Livro> livros) {
-        this.livros = livros;
+    public void setProdutos(Set<Produto> produtos) {
+        this.produtos = produtos;
     }
 }
