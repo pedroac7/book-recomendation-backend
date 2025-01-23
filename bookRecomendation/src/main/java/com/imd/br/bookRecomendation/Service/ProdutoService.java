@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.imd.br.bookRecomendation.Model.Produto;
 import com.imd.br.bookRecomendation.Repository.ProdutoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Service;
 import org.springframework.data.jpa.domain.Specification;
 import com.imd.br.bookRecomendation.Repository.ProdutoSpecification;
@@ -13,6 +14,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
+@Primary
 public class ProdutoService {
 
     @Autowired

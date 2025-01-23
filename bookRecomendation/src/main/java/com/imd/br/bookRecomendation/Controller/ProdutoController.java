@@ -56,8 +56,10 @@ public class ProdutoController {
     }
 
     @PostMapping("/importar")
-    public ResponseEntity<String> importarProdutos() {
-        il.importarProdutos("books");
-        return ResponseEntity.ok("Importação de produtos iniciada!");
+    public ResponseEntity<String> importarProdutos(@RequestParam String query) {
+        il.importarProdutos(query);  // Passando a query para o serviço de importação
+        return ResponseEntity.ok("Importação de filmes iniciada para a query: " + query);
     }
+
+
 }
